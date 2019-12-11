@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather</title>
+</head>
+<body>
+    <h1>Weather in Toronto</h1>
+    <div id="app"></div>
+    <div id="img"></div>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+        crossorigin='anonymous'></script>
+
+    <script>
+        //basic setup for javascript
+        const app = {};
+
+        app.getColor = () =>{
+            $.ajax({
+                url:'https://fun-fun-colors.herokuapp.com/randomcolor',
+                method:'GET',
+                datatype:'json'
+            }).then((res)=>{
+                console.log(res);
+                const color = res.color;
+                $('body').css('background', color);
+            });
+        }
+
+        app.displayWeather = (temp, iconUrl, description) =>{
+            $('#app').html(`<h2>feels like ${temp}°</h2>
+                            <img src='${iconUrl}' alt='${description}'/> 
+                            <p>${description}</p>`);
+
+        }
+
+        app.getWeather = () =>{
+            $.ajax({
+                url:'http://api.wunderground.com/api/cdc4cff5c910d710/conditions/q/zmw:00000.176.71508.json',
+                method:'GET',
+                dataType: 'json'
+            }).then((res)=>{
+                console.log(res);
+                const feels = res.current_observation.feelslike_c;
+                const icon = res.current_observation.icon_url;
+                const iconName = res.current_observation.icon;
+                app.displayWeather(feels, icon, iconName);
+            });
+        }
+
+        app.init=()=>{
+            console.log("working");
+            app.getColor();
+            app.getWeather();
+        }
+
+        $(function () {
+            app.init();
+        });
+    </script>
+</body>
+</html>
