@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //-------------
+        //1 Reduce
+        //-------------
+        let numbers = [2, 55, 332, 12, 86];
+        let largest = numbers.reduce((accumulator, next)=>{
+            //logic to return the largest number
+            if(accumulator >= next){
+                return accumulator;
+            }else{
+                return next;
+            }
+        }, 0);
+        //0 is the first accumulator (acc is the one that is compared all the other numbers, the one that wins each round)
+        // 
+        console.log(largest);
+
+
+        //find longest Name
+        let people = [
+            {
+                name: 'Amie',
+                cohort: 8
+            },
+            {
+                name: 'Max',
+                cohort: 10
+            },
+            {
+                name:'tiffany',
+                cohort: 8
+            }
+        ]
+
+        let longestName = people.reduce((acc, current)=>{
+            console.log('acc',acc.name,'curr',current.name);
+            if(acc.name.length >= current.name.length){
+                return acc;
+            }else{
+                return current;
+            }
+        });
+
+        console.log(longestName);
+
+        //find total
+        let price = [
+            '5.55',
+            '3.80',
+            '2.00'
+        ];
+
+        let total = price.reduce((acc,curr)=>{
+            //return parseInt(acc)+parseInt(curr);
+            //if we use parseInt it will round the number
+
+            return parseFloat(acc)+parseFloat(curr);
+        });
+
+        console.log(total);
+
+        //----------------
+        //organizing code
+        //----------------
+
+        //function must be defined before being called
+        //init is second last (calls the function)
+        //document ready is last
+
+        //----------------------------------------
+        // when to pass an argument to a function
+        //----------------------------------------
+
+        const add = (a,b,c=0) => {
+            return num1 + num2 + num3;
+        }
+
+        const total = add(4,5);
+        const newTotal = add(5,7);
+        const threeTotal = add(2,3,4);
+        
+    </script>
+</body>
+</html>

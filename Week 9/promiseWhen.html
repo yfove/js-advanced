@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise When</title>
+</head>
+<body>
+    <h1>her</h1>
+
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='
+    crossorigin='anonymous'></script>
+    <script>
+        const app = {};
+
+        app.randomNumber = (max) => {
+            return Math.floor(Math.random() * (max + 1));
+        };
+
+        app.getNumber = () => {
+            const number = app.randomNumber(146);
+            return number;
+        };
+
+        app.getColor = (index) => {
+            return $.ajax({
+                url:`https://fun-fun-colors.herokuapp.com/color/${index}`,
+                method: 'GET',
+                dataType:'json'
+            });
+        };
+        app.init = () => {
+            const number1 = app.getNumber();
+            const number2 = app.getNumber();
+            const color1 = app.getColor(number1);
+            const color2 = app.getColor(number2);
+
+            //promise
+            //takes 2 call back functions
+            //first call back function is when the call back is successful
+            //second call back function is when the call back fails
+            $.when(color1, color2).then((res1, res2)=>{
+                // console.log(res1, res2);
+                const first = res1[0].color;
+                const second = res2[0].color;
+                console.log(first, second);
+            }, (error1, error2)=>{
+                console.log(error1, error2);
+            });
+        };
+
+        $(function () {
+            app.init()
+        })
+
+    </script>
+</body>
+</html>

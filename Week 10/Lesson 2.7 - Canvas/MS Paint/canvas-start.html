@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background:#1D425D;
+      text-align: center;
+    }
+
+    .draw {
+      margin:50px auto;
+      border:2px solid white;
+    }
+
+    .draw:active {
+      cursor:crosshair;
+    }
+  </style>
+</head>
+<body>
+  <form action="" class="settings">
+
+    <label for="color">Color</label>
+    <input type="color" name="color" value="#BADA55">
+    <label for="width">Line Width:</label>
+    <input type="range" name="width" min="1" max="100" value="10">
+
+    <a class="download" href="#">Download</a>
+
+  </form>
+
+  <canvas class="draw" width="1000" height="1000"></canvas>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <script>
+    //variables
+    const canvas = document.querySelector(".draw");
+    const c = canvas.getContext("2d");
+    let shouldWeDraw = false; 
+    let lastEvent;
+
+
+    //get color and width
+    const getColor = () => {
+      return document.querySelector("input[type=color]").value;
+    };
+
+    const getWidth = () => {
+      return document.querySelector("input[type=range]").value;
+    };
+
+    //listen for events
+    $('.draw').on('mousedown', function(e){
+      shouldWeDraw = true;
+      lastEvent = e;
+    });
+
+    $('.draw').on('mouseup', function(){
+      shouldWeDraw = false
+    });
+
+    $('.draw').on('mousemove', function(e){
+      if(shouldWeDraw === false){
+        return;
+      }else{
+        console.log(c);
+        c.beginPath();
+        c.strokeStyle = getColor();
+        c.lineWidth = getWidth();
+        c.lineCap = "round";
+        c.lineJoin = "round";
+
+        //move to position of last event
+        c.moveTo(lastEvent.offsetX, lastEvent.offsetY);
+        //draw line to position of current event
+        c.lineTo(e.offsetX, e.offsetY);
+        c.stroke();
+        //this will change the last event to where the mouse was moving last
+        lastEvent = e;
+      }
+    }); 
+
+
+  </script>
+
+</body>
+</html>

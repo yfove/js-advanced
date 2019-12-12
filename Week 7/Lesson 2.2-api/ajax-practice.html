@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>My First AJAX Request</title>
+</head>
+<body>
+	<h1>TTC APP</h1>
+	<p>Open up your console to see how the request went.</p>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+	$(function(){
+		$.ajax({
+			url: 'https://myttc.ca/finch_station.json',
+			method: 'GET',
+			dataType: 'jsonp' //if json doesn't work try jsonp
+		}).then(function(res) { //stands for result
+			console.log(res.name);
+			$('h1').text(res.name);
+		});
+	});
+	</script>
+</body>
+</html>
